@@ -1,0 +1,53 @@
+
+<div style="min-height: 100vh; background: black; color: gold; text-align: center; padding: 40px; font-family: Arial, sans-serif;">
+
+  <h1>BLACKJACK</h1>
+  <p>Welcome to the BlackJack Challenge! Try Your Best to Beat the Dealer!</p>
+
+  <hr style="margin: 30px auto; max-width: 700px;">
+
+  <h2>Dealer</h2>
+
+  <div style="display: flex; justify-content: center; gap: 12px; margin: 20px;">
+    <% @game.dealer_hand.each_with_index do |card, index| %>
+      <% if index == 1 && !@game.finished? %>
+        <div style="background: green; border: 2px solid white; border-radius: 8px; width: 75px; height: 105px; display: grid; place-items: center; font-size: 30px;">?</div>
+      <% else %>
+        <div style="background: red; color: <%= %w[♥ ♦].include?(card[:suit]) ? 'black' : 'gold' %>; border-radius: 8px; width: 75px; height: 105px; display: grid; place-items: center; font-size: 25px;">
+          <%= card[:rank] %><%= card[:suit] %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if @game.finished? %>
+    <h3>Dealer Score: <%= @game.score(@game.dealer_hand) %></h3>
+  <% end %>
+
+  <hr style="margin: 30px auto; max-width: 700px;">
+
+  <h2>Your Hand</h2>
+
+  <div style="display: flex; justify-content: center; gap: 12px; margin: 20px;">
+    <% @game.player_hand.each do |card| %>
+      <div style="background: red; color: <%= %w[♥ ♦].include?(card[:suit]) ? 'black' : 'gold' %>; border-radius: 8px; width: 75px; height: 105px; display: grid; place-items: center; font-size: 25px;">
+        <%= card[:rank] %><%= card[:suit] %>
+      </div>
+    <% end %>
+  </div>
+
+  <h3>Your Score: <%= @game.score(@game.player_hand) %></h3>
+
+  <% if @game.finished? %>
+    <h2 style="color: gold; margin: 25px;"><%= @game.result %></h2>
+  <% else %>
+    <div style="display: flex; justify-content: center; gap: 15px; margin: 25px;">
+      <%= button_to "HIT", hit_path, method: :post, style: "padding: 15px 35px; background: gold; font-size: 18px; cursor: pointer;" %>
+      <%= button_to "STAND", stand_path, method: :post, style: "padding: 15px 35px; background: gold; font-size: 18px; cursor: pointer;" %>
+    </div>
+  <% end %>
+
+  <%= button_to "NEW GAME", new_game_path, method: :post, style: "padding: 15px 35px; background: gold; border: none; border-radius: 5px; cursor: pointer; font-size: 18px;" %>
+
+</div>
+

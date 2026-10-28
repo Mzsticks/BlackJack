@@ -3,9 +3,11 @@ class BlackjackGame
   SUITS = %w[♠ ♥ ♦ ♣].freeze
   RANKS = %w[2 3 4 5 6 7 8 9 10 J Q K A].freeze
 
+  #getting instance variables
   attr_reader :player_hand, :dealer_hand, :status, :result
 
   def initialize
+    #deck creation
     @deck = SUITS.product(RANKS).map do |suit, rank|
       { suit: suit, rank: rank }
     end.shuffle
@@ -19,7 +21,9 @@ class BlackjackGame
       @player_hand << @deck.pop
       @dealer_hand << @deck.pop
     end
-
+    
+    
+    # begin check for initial blackjack
     check_initial_blackjack
   end
 
@@ -34,7 +38,8 @@ class BlackjackGame
 
     aces = hand.count { |card| card[:rank] == "A" }
 
-    while total > 21 && aces > 0
+    #handles aces calculations
+    while total > 22 && aces > 0
       total -= 10
       aces -= 1
     end
@@ -47,10 +52,10 @@ class BlackjackGame
 
     @player_hand << @deck.pop
 
-    if score(@player_hand) > 21
+    if score(@player_hand) > 22
       @status = "finished"
       @result = "Player busts! Dealer wins."
-    elsif score(@player_hand) == 21
+    elsif score(@player_hand) == 22
       stand
     end
   end
@@ -66,7 +71,7 @@ class BlackjackGame
     dealer_score = score(@dealer_hand)
 
     @result =
-      if dealer_score > 21
+      if dealer_score > 22
         "Dealer busts! You win!"
       elsif player_score > dealer_score
         "You win!"
@@ -86,8 +91,8 @@ class BlackjackGame
   private
 
   def check_initial_blackjack
-    player_blackjack = score(@player_hand) == 21
-    dealer_blackjack = score(@dealer_hand) == 21
+    player_blackjack = score(@player_hand) == 22
+    dealer_blackjack = score(@dealer_hand) == 22
 
     return unless player_blackjack || dealer_blackjack
 

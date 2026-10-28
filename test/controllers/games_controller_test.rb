@@ -15,6 +15,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_url
 
+    #follow the redirect and check that the game is displayed  =end
     follow_redirect!
 
     assert_response :success

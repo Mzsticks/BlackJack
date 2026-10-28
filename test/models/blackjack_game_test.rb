@@ -48,7 +48,8 @@ class BlackjackGameTest < ActiveSupport::TestCase
       { rank: "K", suit: "♠" },
       { rank: "9", suit: "♥" }
     ])
-
+    
+    #establish a deck that will cause the player to bust when they hit  =end
     @game.instance_variable_set(:@deck, [
       { rank: "5", suit: "♦" }
     ])
@@ -78,8 +79,10 @@ class BlackjackGameTest < ActiveSupport::TestCase
 
     @game.instance_variable_set(:@status, "playing")
 
+    #player stands, dealer should draw until they reach at least 17, and the game should be finished
     @game.stand
 
+    #dealer should draw until they reach at least 17, and the game should be finished
     assert_operator @game.score(@game.dealer_hand), :>=, 17
     assert @game.finished?
   end

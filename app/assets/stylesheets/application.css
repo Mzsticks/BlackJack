@@ -1,10 +1,338 @@
+
 /*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
+ * Blackjack Application Stylesheet
+ * Ruby on Rails / Propshaft
  */
+
+/* Global styling */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+/* Main Blackjack container */
+.blackjack-table {
+  position: relative;
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: gold;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Blurred parallax background */
+.blackjack-table::before {
+  content: "";
+  position: fixed;
+  inset: -20px;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.45),
+      rgba(0, 0, 0, 0.65)
+    ),
+    url("/casino-background.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  filter: blur(2px);
+  z-index: -1;
+}
+
+/* Main glass-style panel */
+.game-panel {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 35px;
+
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 20px;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.55),
+    inset 0 0 25px rgba(255, 215, 0, 0.04);
+}
+
+/* Main heading */
+.game-title {
+  margin: 0 0 12px;
+  color: #ffd700;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: bold;
+  letter-spacing: 5px;
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.45),
+    0 0 25px rgba(255, 215, 0, 0.15);
+}
+
+/* Welcome text */
+.game-subtitle {
+  color: #f4e5b0;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+/* Section headings */
+.hand-title {
+  color: #ffd700;
+  font-size: 24px;
+  margin: 15px 0;
+}
+
+/* Divider */
+.game-divider {
+  border: 0;
+  height: 1px;
+  max-width: 700px;
+  margin: 30px auto;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 215, 0, 0.7),
+    transparent
+  );
+}
+
+/* Playing card containers */
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px auto;
+}
+
+/* Individual playing cards */
+.playing-card {
+  width: 75px;
+  height: 105px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #b30000;
+  color: #ffd700;
+
+  border: 2px solid #b30000;
+  border-radius: 9px;
+
+  font-size: 25px;
+  font-weight: bold;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Hover effect */
+.playing-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 12px 22px rgba(255, 215, 0, 0.3);
+}
+
+/* All card suits display in gold */
+.playing-card.red-suit
+ {
+  color: #ebce50;
+}
+
+/* All card suits display in gold */
+.playing-card.black-suit
+ {
+  color: #0f0d01;
+}
+
+/*.playing-card.black-suit*/
+
+/* Hidden dealer card */
+.hidden-card {
+  width: 75px;
+  height: 105px;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #0c5936,
+      #0c5936 8px,
+      #073c25 8px,
+      #073c25 16px
+    );
+
+  color: #ffd700;
+  border: 2px solid #e6d6a5;
+  border-radius: 9px;
+
+  font-size: 32px;
+  font-weight: bold;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* Player and dealer score */
+.hand-score {
+  color: #f8e6a5;
+  font-size: 19px;
+  margin: 18px 0;
+}
+
+/* Hit and Stand button row */
+.game-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 25px auto;
+}
+
+/* Rails button_to generates forms */
+.game-actions form,
+.new-game-container form {
+  margin: 0;
+}
+
+/* Shared button styling */
+.game-button {
+  min-width: 145px;
+  padding: 14px 28px;
+
+  background: linear-gradient(
+    135deg,
+    #ffdf70,
+    #d6a51c
+  );
+
+  color: #171717;
+  border: 1px solid #f7d769;
+  border-radius: 8px;
+
+  font-size: 17px;
+  font-weight: bold;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+/* Button hover effect */
+.game-button:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.12);
+
+  box-shadow:
+    0 8px 22px rgba(255, 215, 0, 0.25);
+}
+
+/* Button click effect */
+.game-button:active {
+  transform: translateY(0);
+}
+
+/* Keyboard accessibility */
+.game-button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+/* New Game button */
+.new-game-container {
+  margin-top: 25px;
+}
+
+.new-game-button {
+  background: linear-gradient(
+    135deg,
+    #185c3c,
+    #0b3925
+  );
+
+  color: #ffe38a;
+  border: 1px solid #d4ad45;
+}
+
+/* Game result message */
+.game-result {
+  margin: 25px auto;
+  padding: 18px 25px;
+  max-width: 500px;
+
+  color: #ffe27a;
+  background: rgba(255, 215, 0, 0.08);
+
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 12px;
+
+  font-size: 23px;
+  font-weight: bold;
+
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
+}
+
+/* Mobile styling */
+@media (max-width: 768px) {
+  .blackjack-table {
+    padding: 20px 12px;
+  }
+
+  .game-panel {
+    padding: 22px 14px;
+  }
+
+  .game-title {
+    letter-spacing: 2px;
+  }
+
+  .playing-card,
+  .hidden-card {
+    width: 62px;
+    height: 88px;
+    font-size: 21px;
+  }
+
+  .game-button {
+    min-width: 120px;
+    padding: 12px 18px;
+    font-size: 15px;
+  }
+
+  .game-result {
+    font-size: 19px;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .playing-card,
+  .game-button {
+    transition: none;
+  }
+}

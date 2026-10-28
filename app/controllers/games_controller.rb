@@ -40,8 +40,10 @@ class GamesController < ApplicationController
     data = session[:game]
     return BlackjackGame.new unless data
 
+    #prevents new game from being created when the user refreshes the page and a new deck when player hits send or hit
     game = BlackjackGame.allocate
 
+    #loop thru string array
     %w[deck player_hand dealer_hand status result].each do |key|
       value = data[key] || data[key.to_sym]
 
